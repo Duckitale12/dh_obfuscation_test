@@ -1,4 +1,4 @@
-local _Version_ = "1.02v."
+local _Version_ = "1.03v."
 
 local EggNames = {
 	["void-egg"] = "Void Egg",
@@ -229,14 +229,18 @@ local Event_Islands_Hook = "https://discord.com/api/webhooks/1363151340364366066
 
 function EggFinderFallback()
 	task.spawn(function()
+		warn(Setting_FallbackServerHopper)
+		warn(Setting_FallbackSelectedEgg)
 		if Setting_FallbackServerHopper and Setting_FallbackSelectedEgg ~= "-" then
 			local function TravelToEgg(pos)
+				warn("Travel")
 				game.Players.LocalPlayer.Character.Humanoid:MoveTo(pos)
 			end
 
 			if Setting_FallbackSelectedEgg == "Pastel Egg" or Setting_FallbackSelectedEgg == "Bunny Egg" then
 				local PositionToTravel = Vector3.new(-397, 12013, -62)
 
+				warn("TP")
 				game:GetService("ReplicatedStorage").Shared.Framework.Network.Remote.Event:FireServer("Teleport", "Workspace.Event.Portal.Spawn")
 
 				task.wait(0.5)
@@ -729,11 +733,11 @@ local Toggle_FallbackServerHopper = Tab_EggFarm:CreateToggle({
 })
 
 local Dropdown_FallbackEggSelection = Tab_EggFarm:CreateDropdown({
-	Name = "Dropdown Example",
+	Name = "Egg Selection",
 	Options = {"-","Bunny Egg", "Pastel Egg", "Void Egg", "Nightmare Egg"},
 	CurrentOption = {"-"},
 	MultipleOptions = false,
-	Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Flag = "Flag_FallbackEggSelection", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 	Callback = function(SelectedOption)
 		Setting_FallbackSelectedEgg = SelectedOption
 		-- The function that takes place when the selected option is changed
