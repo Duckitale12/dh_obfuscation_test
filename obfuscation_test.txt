@@ -1,4 +1,4 @@
-local _Version_ = "1.06v."
+local _Version_ = "1.061v."
 
 local EggNames = {
 	["void-egg"] = "Void Egg",
@@ -256,7 +256,7 @@ function EggFinderFallback()
 				local PositionToTravel = Vector3.new(-141, 10, -44)
 				game:GetService("ReplicatedStorage").Shared.Framework.Network.Remote.Event:FireServer("Teleport", "Workspace.Worlds.The Overworld.PortalSpawn")
 				task.wait(0.5)
-				TravelToEgg(-31, 9, -28)
+				TravelToEgg(Vector3.new(-31, 9, -28))
 				task.wait(8)
 				TravelToEgg(PositionToTravel)
 				StartOpeningLoop()
@@ -266,7 +266,7 @@ function EggFinderFallback()
 				local PositionToTravel = Vector3.new(-143, 10, -26)
 				game:GetService("ReplicatedStorage").Shared.Framework.Network.Remote.Event:FireServer("Teleport", "Workspace.Worlds.The Overworld.PortalSpawn")
 				task.wait(0.5)
-				TravelToEgg(-31, 9, -28)
+				TravelToEgg(Vector3.new(-31, 9, -28))
 				task.wait(8)
 				TravelToEgg(PositionToTravel)
 				StartOpeningLoop()
