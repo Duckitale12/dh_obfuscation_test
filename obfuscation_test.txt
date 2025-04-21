@@ -1,4 +1,4 @@
-local _Version_ = "1.04v."
+local _Version_ = "1.05v."
 
 local EggNames = {
 	["void-egg"] = "Void Egg",
@@ -94,7 +94,7 @@ local Setting_Flag_ServerHopFarm_BunnyEgg10x = false
 local Setting_Flag_ServerHopFarm_AuraEgg = false
 
 local Setting_FallbackServerHopper = false
-local Setting_FallbackSelectedEgg = "-"
+local Setting_FallbackSelectedEgg = ""
 
 -- TELEPORTING FUNCS
 
@@ -231,21 +231,41 @@ function EggFinderFallback()
 	task.spawn(function()
 		warn(Setting_FallbackServerHopper)
 		warn(Setting_FallbackSelectedEgg[1])
-		if Setting_FallbackServerHopper and Setting_FallbackSelectedEgg[1] ~= "-" then
+		if Setting_FallbackServerHopper and Setting_FallbackSelectedEgg[1] ~= "" then
 			local function TravelToEgg(pos)
 				warn("Travel")
 				game.Players.LocalPlayer.Character.Humanoid:MoveTo(pos)
 			end
+			
+			local function StartOpeningLoop()
+				while Window do
+					game:GetService("ReplicatedStorage").Shared.Framework.Network.Remote.Event:FireServer("HatchEgg", Setting_FallbackSelectedEgg[1], 99)
+					task.wait(0.25)
+				end
+			end
 
 			if Setting_FallbackSelectedEgg[1] == "Pastel Egg" or Setting_FallbackSelectedEgg[1] == "Bunny Egg" then
 				local PositionToTravel = Vector3.new(-397, 12013, -62)
-
-				warn("TP")
 				game:GetService("ReplicatedStorage").Shared.Framework.Network.Remote.Event:FireServer("Teleport", "Workspace.Event.Portal.Spawn")
-
 				task.wait(0.5)
-				
 				TravelToEgg(PositionToTravel)
+				StartOpeningLoop()
+			end
+			
+			if Setting_FallbackSelectedEgg[1] == "Nightmare Egg" then
+				local PositionToTravel = Vector3.new(-141, 10, -44)
+				game:GetService("ReplicatedStorage").Shared.Framework.Network.Remote.Event:FireServer("Teleport", "Workspace.Worlds.The Overworld.PortalSpawn")
+				task.wait(0.5)
+				TravelToEgg(PositionToTravel)
+				StartOpeningLoop()
+			end
+			
+			if Setting_FallbackSelectedEgg[1] == "Void Egg" then
+				local PositionToTravel = Vector3.new(-143, 10, -26)
+				game:GetService("ReplicatedStorage").Shared.Framework.Network.Remote.Event:FireServer("Teleport", "Workspace.Worlds.The Overworld.PortalSpawn")
+				task.wait(0.5)
+				TravelToEgg(PositionToTravel)
+				StartOpeningLoop()
 			end
 		end
 	end)
@@ -732,8 +752,8 @@ local Toggle_FallbackServerHopper = Tab_EggFarm:CreateToggle({
 
 local Dropdown_FallbackEggSelection = Tab_EggFarm:CreateDropdown({
 	Name = "Egg Selection",
-	Options = {"-","Bunny Egg", "Pastel Egg", "Void Egg", "Nightmare Egg"},
-	CurrentOption = {"-"},
+	Options = {"Bunny Egg", "Pastel Egg", "Void Egg", "Nightmare Egg"},
+	CurrentOption = {""},
 	MultipleOptions = false,
 	Flag = "Flag_FallbackEggSelection", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 	Callback = function(SelectedOption)
