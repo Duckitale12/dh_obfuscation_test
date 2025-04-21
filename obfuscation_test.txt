@@ -1,4 +1,4 @@
-local _Version_ = "1.03v."
+local _Version_ = "1.04v."
 
 local EggNames = {
 	["void-egg"] = "Void Egg",
@@ -230,14 +230,14 @@ local Event_Islands_Hook = "https://discord.com/api/webhooks/1363151340364366066
 function EggFinderFallback()
 	task.spawn(function()
 		warn(Setting_FallbackServerHopper)
-		warn(Setting_FallbackSelectedEgg)
-		if Setting_FallbackServerHopper and Setting_FallbackSelectedEgg ~= "-" then
+		warn(Setting_FallbackSelectedEgg[1])
+		if Setting_FallbackServerHopper and Setting_FallbackSelectedEgg[1] ~= "-" then
 			local function TravelToEgg(pos)
 				warn("Travel")
 				game.Players.LocalPlayer.Character.Humanoid:MoveTo(pos)
 			end
 
-			if Setting_FallbackSelectedEgg == "Pastel Egg" or Setting_FallbackSelectedEgg == "Bunny Egg" then
+			if Setting_FallbackSelectedEgg[1] == "Pastel Egg" or Setting_FallbackSelectedEgg[1] == "Bunny Egg" then
 				local PositionToTravel = Vector3.new(-397, 12013, -62)
 
 				warn("TP")
@@ -719,9 +719,7 @@ local Toggle_ServerHopFarm = Tab_EggFarm:CreateToggle({
 
 local Section_ServerHopFarmToggle = Tab_EggFarm:CreateSection("Egg Finder  - Fallback")
 
-local Paragraph_6 = Tab_EggFarm:CreateParagraph({Title = "", Content = "Start opening normal eggs when the egg finder is searching OR an error occured. [HIGHLY RECOMMENDED]"})
-
-local InfoLabel2 = Tab_EggFarm:CreateLabel("", 77255405757835, Color3.fromRGB(172, 215, 255), false) -- Title, Icon, Color, IgnoreTheme
+local Paragraph_6 = Tab_EggFarm:CreateParagraph({Title = "<b>Info</b>", Content = "Start opening normal eggs when the egg finder is searching OR an error occured. [HIGHLY RECOMMENDED]"})
 
 local Toggle_FallbackServerHopper = Tab_EggFarm:CreateToggle({
 	Name = "Egg Fallback",
